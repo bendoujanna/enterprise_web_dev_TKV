@@ -49,8 +49,8 @@ This project is an enterprise-level full-stack application designed to process, 
 
 #### Team members
 
-Tumba II Kongolo
-
 Bendou Janna Vitalina Soeur
 
-Kamy
+Kamy Uwambaye
+
+Tumba II Kongolo
