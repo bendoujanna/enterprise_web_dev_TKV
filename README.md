@@ -9,8 +9,9 @@ This project is an enterprise-level full-stack application designed to process, 
 
 ### Project structure 
 
+```
 ├── README.md                 # Project overview, setup, and links
-├── .env.example              # Template for environment variables
+├── .env              # Template for environment variables
 ├── requirements.txt          # Python dependencies (lxml, dateutil, etc.)
 ├── index.html                # Main Dashboard entry point
 ├── web/
@@ -44,9 +45,12 @@ This project is an enterprise-level full-stack application designed to process, 
     ├── test_parse_xml.py     # Unit tests for parsing
     ├── test_clean_normalize.py
     └── test_categorize.py
+```
 
 #### Team members
 
 Tumba II Kongolo
+
 Bendou Janna Vitalina Soeur
+
 Kamy
