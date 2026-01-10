@@ -47,6 +47,22 @@ This project is an enterprise-level full-stack application designed to process, 
     └── test_categorize.py
 ```
 
+## Scrum Board
+
+Our team is using **Trello** for Agile task management and sprint planning.
+
+**Board URL:** [MoMo Dashboard Scrum Board](https://trello.com/invite/b/69624a1558e6a5d62412b76c/ATTIa8c83bd9bb092c937a5cac581aae0704AC5A5E80/momo-dashboard-scrum-board)
+
+**Board Structure:**
+- **To Do**: Backlog of upcoming tasks (3 initial tasks added)
+- **In Progress**: Currently active work items
+- **Done**: Completed tasks
+
+**Initial Tasks:**
+1. Set up team GitHub repository
+2. Create system architecture diagram
+3. Research XML parsing libraries
+
 #### Team members
 
 Bendou Janna Vitalina Soeur
