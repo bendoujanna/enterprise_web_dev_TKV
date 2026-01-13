@@ -1,6 +1,6 @@
 # enterprise_web_dev_TKV
 
-## team name: TKV_eng
+## team name: Sprint Zero
 
 
 ### Project description
