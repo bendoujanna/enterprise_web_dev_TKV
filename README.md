@@ -101,6 +101,116 @@ Our team is using **Trello** for Agile task management and sprint planning.
 2. Create system architecture diagram
 3. Research XML parsing libraries
 
+**Database Setup**
+## Database Setup (Week 2 Assignment)
+
+### Overview
+MySQL database for MoMo SMS transaction processing with support for multiple user types, transaction categories, and comprehensive audit logging.
+
+### Prerequisites
+- MySQL 8.0 or higher installed
+- MySQL Workbench (recommended for running scripts)
+
+### Quick Setup
+
+**Using MySQL Workbench:**
+1. Open MySQL Workbench
+2. Connect to Local instance (password: `michealkong24@x`)
+3. File → Open SQL Script → Select `database_setup.sql`
+4. Click ⚡ Execute
+5. Refresh schemas to see `momo_sms_db`
+
+**Verify Installation:**
+```sql
+USE momo_sms_db;
+SHOW TABLES;
+```
+
+### Database Structure
+
+**Tables:**
+- `users` - MoMo account holders (5 sample records)
+  - Supports PERSON, MERCHANT, BANK, SYSTEM account types
+  - Indexed on phone_number, account_code, user_type
+  
+- `transaction_categories` - Transaction types (5 sample records)
+  - Money Transfer, Airtime, Bill Payment, Merchant Payment, Cash Withdrawal
+  - Indexed on category_code
+  
+- `transactions` - Main transaction records (5 sample records)
+  - Stores amount, currency, fee, status, reference codes
+  - Indexed on category_id, transaction_date, status, currency
+  
+- `transaction_parties` - User-Transaction junction table (10 sample records)
+  - Resolves M:N relationship between users and transactions
+  - Tracks SENDER and RECEIVER roles
+  - Indexed on transaction_id, user_id, role
+  
+- `system_logs` - System audit logs (5 sample records)
+  - Tracks all system operations and errors
+  - Indexed on log_date, log_level, user_id, transaction_id
+
+### Key Features
+
+✅ **Foreign Key Constraints** - Referential integrity across all tables
+- transactions → transaction_categories
+- transaction_parties → transactions, users
+- system_logs → users, transactions
+
+✅ **CHECK Constraints** - Data validation rules
+- Phone numbers must start with '+'
+- Transaction amounts must be positive
+- Fees must be non-negative
+- Log levels must be INFO/WARNING/ERROR/CRITICAL
+
+✅ **15 Performance Indexes** - Optimized for common queries
+- All foreign keys indexed
+- Frequently searched columns indexed (phone, dates, status)
+
+✅ **Column Comments** - Self-documenting schema
+- Every column has descriptive comments
+
+✅ **M:N Relationship** - Junction table pattern
+- Users and Transactions linked via transaction_parties table
+- Supports multiple participants per transaction
+
+### Sample Queries
+
+**View all users:**
+```sql
+SELECT * FROM users;
+```
+
+**Transactions with categories (JOIN):**
+```sql
+SELECT t.transaction_id, t.amount, tc.name AS category, t.status
+FROM transactions t
+JOIN transaction_categories tc ON t.category_id = tc.category_id;
+```
+
+**User transaction history (M:N relationship):**
+```sql
+SELECT tp.transaction_id, u.name AS user_name, tp.role, t.amount
+FROM transaction_parties tp
+JOIN users u ON tp.user_id = u.user_id
+JOIN transactions t ON tp.transaction_id = t.transaction_id
+ORDER BY tp.transaction_id;
+```
+
+### Assignment Files
+
+- `database_setup.sql` - Complete database setup script with DDL and sample data
+- `json_schemas.json` - JSON representations of database entities for API design
+- `screenshots/` - Query results demonstrating CRUD operations and constraints
+  - 01_tables.png - Database tables
+  - 02_users.png - User records
+  - 03_transactions_join.png - JOIN query results
+  - 04_many_to_many.png - M:N relationship demonstration
+  - 05_update.png - UPDATE operation
+  - 06_constraints.png - Database constraints
+  - 07_indexes.png - Performance indexes
+
+
 #### Team members
 
 Bendou Janna Vitalina Soeur

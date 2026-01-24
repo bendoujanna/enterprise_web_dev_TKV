@@ -1,0 +1,63 @@
+{
+  "user": {
+    "user_id": 1,
+    "name": "Jean Damascene Nkusi",
+    "phone_number": "+250788123456",
+    "account_code": "ACC001",
+    "user_type": "PERSON",
+    "created_at": "2026-01-15T10:30:00Z"
+  },
+  "transaction_category": {
+    "category_id": 1,
+    "name": "Money Transfer",
+    "code": "XFER",
+    "description": "Person-to-person money transfer",
+    "created_at": "2026-01-10T09:00:00Z"
+  },
+  "transaction": {
+    "transaction_id": "TXN20260124001",
+    "category_id": 1,
+    "amount": 10000.00,
+    "currency": "RWF",
+    "fee": 100.00,
+    "balance_after": 39900.00,
+    "transaction_date": "2026-01-24T14:30:00Z",
+    "status": "COMPLETED",
+    "reference_code": "REF001",
+    "description": "Money transfer to Marie"
+  },
+  "transaction_with_details": {
+    "transaction_id": "TXN20260124001",
+    "amount": 10000.00,
+    "currency": "RWF",
+    "fee": 100.00,
+    "transaction_date": "2026-01-24T14:30:00Z",
+    "status": "COMPLETED",
+    "category": {
+      "category_id": 1,
+      "name": "Money Transfer",
+      "code": "XFER"
+    },
+    "sender": {
+      "user_id": 1,
+      "name": "Jean Damascene Nkusi",
+      "phone_number": "+250788123456",
+      "account_code": "ACC001"
+    },
+    "receiver": {
+      "user_id": 2,
+      "name": "Marie Claire Uwase",
+      "phone_number": "+250788234567",
+      "account_code": "ACC002"
+    }
+  },
+  "system_log": {
+    "log_id": 1,
+    "log_date": "2026-01-24T14:30:05Z",
+    "log_level": "INFO",
+    "action": "TRANSACTION_CREATED",
+    "message": "Transaction TXN20260124001 created successfully",
+    "user_id": 1,
+    "transaction_id": "TXN20260124001"
+  }
+}
