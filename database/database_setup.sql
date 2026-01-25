@@ -7,7 +7,7 @@ CREATE DATABASE momo_sms_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE momo_sms_db;
 
 -- ==================================================================
--- TABLE 1: Users/Customers (matches ERD exactly)
+-- TABLE 1: Users/Customers
 -- ==================================================================
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Unique user identifier',
@@ -26,7 +26,7 @@ CREATE INDEX idx_account_code ON users(account_code);
 CREATE INDEX idx_user_type ON users(user_type);
 
 -- ==================================================================
--- TABLE 2: Transaction_Categories (matches ERD exactly)
+-- TABLE 2: Transaction_Categories
 -- ==================================================================
 CREATE TABLE transaction_categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Category identifier',
@@ -39,7 +39,7 @@ CREATE TABLE transaction_categories (
 CREATE INDEX idx_category_code ON transaction_categories(code);
 
 -- ==================================================================
--- TABLE 3: Transactions (matches ERD exactly)
+-- TABLE 3: Transactions
 -- ==================================================================
 CREATE TABLE transactions (
     transaction_id VARCHAR(50) PRIMARY KEY COMMENT 'Unique transaction ID',
@@ -66,7 +66,7 @@ CREATE INDEX idx_status ON transactions(status);
 CREATE INDEX idx_currency ON transactions(currency);
 
 -- ==================================================================
--- TABLE 4: Transaction_Parties (matches ERD - includes AGENT role)
+-- TABLE 4: Transaction_Parties (M:N relationship)
 -- ==================================================================
 CREATE TABLE transaction_parties (
     party_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Party record ID',
@@ -87,7 +87,7 @@ CREATE INDEX idx_party_user ON transaction_parties(user_id);
 CREATE INDEX idx_party_role ON transaction_parties(role);
 
 -- ==================================================================
--- TABLE 5: System_Logs (matches ERD exactly)
+-- TABLE 5: System_Logs
 -- ==================================================================
 CREATE TABLE system_logs (
     log_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Log entry ID',
@@ -149,7 +149,9 @@ INSERT INTO system_logs (user_id, transaction_id, log_date, log_level, action, m
 (NULL, NULL, CURRENT_TIMESTAMP, 'WARNING', 'SYSTEM_MAINTENANCE', 'Database backup initiated automatically'),
 (1, 'TXN20260124004', CURRENT_TIMESTAMP, 'INFO', 'TRANSACTION_CREATED', 'Airtime purchase completed successfully');
 
+
 -- ==================================================================
--- Ai was used for correction and optimization of this SQL code.
+-- Ai was used for code syntax verification and feedback
 -- ==================================================================
+
 
