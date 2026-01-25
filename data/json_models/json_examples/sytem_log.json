@@ -1,9 +1,0 @@
-{
-  "system_log": {
-    "log_id": "LOG001",
-    "transaction_id": "TXN20240125001",
-    "timestamp": "2024-01-25T14:30:45Z",
-    "action": "transaction_processed",
-    "status": "success"
-  }
-}

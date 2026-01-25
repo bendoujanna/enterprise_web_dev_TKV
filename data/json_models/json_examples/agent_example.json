@@ -1,9 +1,0 @@
-{
-  "agent": {
-    "agent_id": "AGT001",
-    "agent_name": "Nakasero Mobile Money Point",
-    "phone": "256712345679",
-    "location": "Kampala, Central Division",
-    "status": "active"
-  }
-}
