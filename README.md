@@ -25,6 +25,17 @@ This project is an enterprise-level full-stack application designed to process, 
 │   └── logs/
 │       ├── etl.log           # Logs for the ETL process
 │       └── dead_letter/      # Storage for unparsed/invalid XML snippets
+├── docs/
+│   └── erd_diagram.png       # ERD image
+├── database/                 # Database implementation
+│   └── database_setup.sql
+├── json/                     # json schemas
+│    └── examples
+│       ├── system_log.json
+│       ├── transaction_category.json
+│       ├── transaction_clean.json  
+│       ├── transaction_complete.json   
+│       └── user_example.json
 ├── etl/
 │   ├── __init__.py
 │   ├── config.py             # File paths and configuration thresholds
@@ -106,7 +117,7 @@ Our team is using **Trello** for Agile task management and sprint planning.
 
 ## I. Entity relationship diagram design
 
-[view the ERD here](docs/erd_diagram.png)
+[View the Entity Relationship Diagram](docs/erd_diagram.png)
 
 **Database design justification**
 
@@ -118,7 +129,7 @@ The most critical design decision was resolving the Many-to-Many (M:N) relations
 
 Data Integrity and Types To ensure financial precision, all monetary fields (amount, fee, account_balance) use the DECIMAL(15, 2) data type rather than FLOAT, eliminating the risk of rounding errors during calculations. We also utilized ENUM types for columns like status and user_type to restrict data entry to valid, predefined states. Finally, the System_Logs entity provides an independent audit trail, tracking the parsing process and capturing any errors via a log_level attribute, ensuring the system is transparent and debuggable.
 
-## Database setup and implementation
+## II. Database setup and implementation
 
 ### Overview
 MySQL database for MoMo SMS transaction processing with support for multiple user types, transaction categories, and comprehensive audit logging.
@@ -231,6 +242,9 @@ ORDER BY tp.transaction_id;
 Added JSON schemas for MoMo transaction API responses in `/data/json_models/`:
 - Complete transaction examples with nested relationships
 - SQL-to-JSON mapping documentation
+
+[View the documentation](json/task3_report.md)
+
 - 6 JSON example files for all database entities
 
 
