@@ -1,0 +1,12 @@
+{
+  "user": {
+    "user_id": "U1001",
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone_number": "256712345678",
+    "email": "john.doe@example.com",
+    "registration_date": "2024-01-15T10:30:00Z",
+    "account_status": "active",
+    "balance": 150000.50
+  }
+}
