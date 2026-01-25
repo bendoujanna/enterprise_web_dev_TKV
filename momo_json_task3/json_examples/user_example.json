@@ -1,12 +1,11 @@
 {
   "user": {
-    "user_id": "U1001",
-    "first_name": "John",
-    "last_name": "Doe",
-    "phone_number": "256712345678",
-    "email": "john.doe@example.com",
-    "registration_date": "2024-01-15T10:30:00Z",
-    "account_status": "active",
-    "balance": 150000.50
+    "user_id": 1,
+    "name": "Jean Damascene Nkusi",
+    "phone_number": "+250788123456",
+    "account_code": "ACC001",
+    "user_type": "PERSON",
+    "account_balance": 50000.00,
+    "created_at": "2024-01-24T10:30:00Z"
   }
 }
