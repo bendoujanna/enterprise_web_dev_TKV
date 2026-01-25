@@ -3,7 +3,7 @@
 ## team name: Sprint Zero
 
 
-### Project description
+### Project description (week 1)
 
 This project is an enterprise-level full-stack application designed to process, analyze, and visualize Mobile Money (MoMo) transaction data. The system automates the transition of unstructured financial data from raw XML SMS exports into a structured, relational format for meaningful business intelligence.
 
@@ -101,8 +101,24 @@ Our team is using **Trello** for Agile task management and sprint planning.
 2. Create system architecture diagram
 3. Research XML parsing libraries
 
-**Database Setup**
-## Database Setup (Week 2 Assignment)
+
+## Database design and implementation  (week 2)
+
+## I. Entity relationship diagram design
+
+[view the ERD here](docs/erd_diagram.png)
+
+**Database design justification**
+
+This Entity Relationship Diagram (ERD) represents a relational database architecture designed to efficiently store and manage Mobile Money (MoMo) transactions parsed from XML data. The design prioritizes data integrity, scalability, and strict financial accuracy, implemented using MySQL. The schema follows the Third Normal Form (3NF) to eliminate redundancy and ensure that non-key attributes are fully dependent on the primary key.
+
+Core Architecture and Relationships The central entity is the Transactions table, which is linked to Transaction_Categories via a One-to-Many (1:M) relationship, allowing us to categorize operations (e.g., "P2P", "Bill Payment") without duplicating text.
+
+The most critical design decision was resolving the Many-to-Many (M:N) relationship between Users and Transactions. Since a single MoMo transaction involves multiple actors (a Sender, a Receiver, and often an Agent), a direct link would have been insufficient. We resolved this by creating a junction table named Transaction_Parties. This table records every participant in a transaction with a specific role (SENDER, RECEIVER, AGENT). We assigned a surrogate Primary Key (party_id) of type INT for efficient indexing, while simultaneously enforcing a UNIQUE constraint on the combination of transaction_id, user_id, and role to prevent logical duplicates.
+
+Data Integrity and Types To ensure financial precision, all monetary fields (amount, fee, account_balance) use the DECIMAL(15, 2) data type rather than FLOAT, eliminating the risk of rounding errors during calculations. We also utilized ENUM types for columns like status and user_type to restrict data entry to valid, predefined states. Finally, the System_Logs entity provides an independent audit trail, tracking the parsing process and capturing any errors via a log_level attribute, ensuring the system is transparent and debuggable.
+
+## Database setup and implementation
 
 ### Overview
 MySQL database for MoMo SMS transaction processing with support for multiple user types, transaction categories, and comprehensive audit logging.
@@ -117,7 +133,7 @@ MySQL database for MoMo SMS transaction processing with support for multiple use
 1. Open MySQL Workbench
 2. Connect to Local instance (password: `michealkong24@x`)
 3. File → Open SQL Script → Select `database_setup.sql`
-4. Click ⚡ Execute
+4. Click Execute
 5. Refresh schemas to see `momo_sms_db`
 
 **Verify Installation:**
@@ -152,25 +168,25 @@ SHOW TABLES;
 
 ### Key Features
 
-✅ **Foreign Key Constraints** - Referential integrity across all tables
+  **Foreign Key Constraints** - Referential integrity across all tables
 - transactions → transaction_categories
 - transaction_parties → transactions, users
 - system_logs → users, transactions
 
-✅ **CHECK Constraints** - Data validation rules
+  **CHECK Constraints** - Data validation rules
 - Phone numbers must start with '+'
 - Transaction amounts must be positive
 - Fees must be non-negative
 - Log levels must be INFO/WARNING/ERROR/CRITICAL
 
-✅ **15 Performance Indexes** - Optimized for common queries
+  **15 Performance Indexes** - Optimized for common queries
 - All foreign keys indexed
 - Frequently searched columns indexed (phone, dates, status)
 
-✅ **Column Comments** - Self-documenting schema
+  **Column Comments** - Self-documenting schema
 - Every column has descriptive comments
 
-✅ **M:N Relationship** - Junction table pattern
+  **M:N Relationship** - Junction table pattern
 - Users and Transactions linked via transaction_parties table
 - Supports multiple participants per transaction
 
@@ -199,7 +215,7 @@ ORDER BY tp.transaction_id;
 
 ### Assignment Files
 
-- `database_setup.sql` - Complete database setup script with DDL and sample data
+- `database/database_setup.sql` - Complete database setup script with DDL and sample data
 - `json_schemas.json` - JSON representations of database entities for API design
 - `screenshots/` - Query results demonstrating CRUD operations and constraints
   - 01_tables.png - Database tables
@@ -210,7 +226,7 @@ ORDER BY tp.transaction_id;
   - 06_constraints.png - Database constraints
   - 07_indexes.png - Performance indexes
 
-### JSON Data Modeling 
+### III. JSON Data Modeling 
 
 Added JSON schemas for MoMo transaction API responses in `/data/json_models/`:
 - Complete transaction examples with nested relationships
