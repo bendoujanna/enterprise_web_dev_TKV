@@ -5,6 +5,14 @@
 ## 1. Introduction
 This JSON data modeling document outlines the serialization strategy for the MoMo SMS transaction processing system. Based on the ERD designed in Task 1, these JSON schemas represent how relational database entities are transformed into JSON format for API responses and data exchange.
 
+**Important:** All JSON schemas exactly match the actual database structure with:
+- **Integer IDs** (not strings) matching database AUTO_INCREMENT columns
+- **Rwandan phone formats** (+250) as stored in the database  
+- **Correct ENUM values** (COMPLETED, PERSON, INFO, etc.)
+- **Removed extra fields** not present in database schema
+- **Added missing fields** (account_code, user_type, reference_code, etc.)
+
+
 The design follows RESTful API best practices, with nested objects for related data to reduce client-side API calls. Each JSON structure maintains referential integrity while optimizing for mobile network efficiency - crucial for SMS-based systems in regions with limited bandwidth.
 
 Key design decisions include:
@@ -23,14 +31,13 @@ These JSON models support the full transaction lifecycle from initiation through
 ```json
 {
   "user": {
-    "user_id": "U1001",
-    "first_name": "John",
-    "last_name": "Doe",
-    "phone_number": "256712345678",
-    "email": "john.doe@example.com",
-    "registration_date": "2024-01-15T10:30:00Z",
-    "account_status": "active",
-    "balance": 150000.50
+    "user_id": 1,
+    "name": "Jean Damascene Nkusi",
+    "phone_number": "+250788123456",
+    "account_code": "ACC001",
+    "user_type": "PERSON",
+    "account_balance": 50000.00,
+    "created_at": "2024-01-24T10:30:00Z"
   }
 }
 ``` 
@@ -39,85 +46,70 @@ These JSON models support the full transaction lifecycle from initiation through
 ```json
 {
   "transaction_category": {
-    "category_id": "CAT001",
-    "category_name": "Money Transfer",
+    "category_id": 1,
+    "name": "Money Transfer",
+    "code": "XFER",
     "description": "Person-to-person money transfer",
-    "transaction_fee": 500.00,
-    "min_amount": 1000.00,
-    "max_amount": 5000000.00
+    "created_at": "2024-01-24T09:00:00Z"
   }
 }
 ```
 
-### 2.3 Agent Information
-```json
-{
-  "agent": {
-    "agent_id": "AGT001",
-    "agent_name": "Nakasero Mobile Money Point",
-    "phone": "256712345679",
-    "location": "Kampala, Central Division",
-    "status": "active",
-    "registration_date": "2024-01-10T09:00:00Z",
-    "daily_limit": 10000000.00,
-    "transactions_today": 45,
-    "commission_rate": 0.015
-  }
-}
-```
 
-### 2.4 System Log
+
+### 2.3 System Log
 ```json
 {
   "system_log": {
-    "log_id": "LOG20240125001",
-    "transaction_id": "TXN20240125001",
-    "timestamp": "2024-01-25T14:30:45Z",
+    "log_id": 1,
+    "user_id": 1,
+    "transaction_id": "TXN20260124001",
+    "log_date": "2024-01-24T14:30:46Z",
     "log_level": "INFO",
-    "action": "transaction_processed",
-    "status": "success",
-    "user_id": "U1001",
-    "ip_address": "192.168.1.100",
-    "user_agent": "MoMoApp/2.1.0 iOS/15.4",
-    "processing_time_ms": 245,
-    "details": "Transaction completed successfully, SMS sent to both parties",
-    "error_code": null,
-    "stack_trace": null
+    "action": "TRANSACTION_CREATED",
+    "message": "User initiated money transfer successfully"
   }
 }
 ```
 
-### 2.5 Complete Transaction (Complex Example)
+### 2.4 Complete Transaction (Complex Example)
 This example demonstrates a fully nested transaction object with all related data:
 
 ```json
 {
-  "complete_transaction": {
-    "transaction_summary": {
-      "transaction_id": "TXN20240125001",
-      "reference_id": "REF7A83B9C",
-      "amount": 100000.00,
-      "currency": "UGX",
-      "transaction_date": "2024-01-25T14:30:45Z",
-      "status": "completed",
-      "description": "School fees payment",
-      "transaction_type": "money_transfer"
+  "transaction": {
+    "transaction_id": "TXN20260124001",
+    "category_id": 1,
+    "amount": 10000.00,
+    "currency": "RWF",
+    "transaction_date": "2024-01-24T14:30:45Z",
+    "fee": 100.00,
+    "balance_after": 39900.00,
+    "status": "COMPLETED",
+    "reference_code": "REF001",
+    "description": "Money transfer to Marie",
+    "created_at": "2024-01-24T14:30:45Z"
+  },
+  "parties": [
+    {
+      "party_id": 1,
+      "user_id": 1,
+      "name": "Jean Damascene Nkusi",
+      "role": "SENDER",
+      "phone_number": "+250788123456"
     },
-    "sender_details": {
-      "user_id": "U1001",
-      "full_name": "John Doe",
-      "phone_number": "256712345678"
-    },
-    "receiver_details": {
-      "user_id": "U1002",
-      "full_name": "Jane Smith",
-      "phone_number": "256712345680"
-    },
-    "financial_details": {
-      "principal_amount": 100000.00,
-      "transaction_fee": 500.00,
-      "total_debit": 100500.00
+    {
+      "party_id": 2,
+      "user_id": 2,
+      "name": "Marie Claire Uwase",
+      "role": "RECEIVER",
+      "phone_number": "+250788234567"
     }
+  ],
+  "category": {
+    "category_id": 1,
+    "name": "Money Transfer",
+    "code": "XFER"
   }
 }
 ```
@@ -125,17 +117,21 @@ This example demonstrates a fully nested transaction object with all related dat
 
 | SQL Table | SQL Column | JSON Object | JSON Field | Data Type | Notes |
 |-----------|------------|-------------|------------|-----------|-------|
-| users | user_id | user | user_id | string | Primary key |
-| users | first_name | user | firstName | string | camelCase in JSON |
-| users | phone_number | user | phoneNumber | string | E.164 format |
-| users | balance | user | balance | number | Decimal as number |
+| users | user_id | user | user_id | integer | Primary key (INT) |
+| users | name | user | name | string | Full name |
+| users | phone_number | user | phoneNumber | string | E.164 format with + |
+| users | account_code | user | accountCode | string | MoMo account identifier |
+| users | user_type | user | userType | string | PERSON/MERCHANT/BANK/AGENT/SYSTEM |
+| users | account_balance | user | accountBalance | number | Current balance |
+| users | created_at | user | createdAt | string | ISO 8601 format |
 | transactions | transaction_id | transaction | transactionId | string | Unique identifier |
+| transactions | category_id | transaction | categoryId | integer | Foreign key to categories |
 | transactions | amount | transaction | amount | number | Transaction value |
-| transactions | status | transaction | status | string | completed/pending/failed |
-| transaction_category | category_name | category | name | string | Payment type |
-| agents | agent_name | agent | agentName | string | Display name |
-| system_logs | log_timestamp | systemLog | timestamp | string | ISO 8601 format |
-| locations | district | user.location | district | string | Nested object |
+| transactions | currency | transaction | currency | string | RWF/USD/EUR |
+| transactions | reference_code | transaction | referenceCode | string | External reference |
+| transaction_categories | code | category | code | string | Short category code |
+| system_logs | log_level | systemLog | logLevel | string | INFO/WARNING/ERROR/CRITICAL |
+| transaction_parties | role | party | role | string | SENDER/RECEIVER/AGENT |
 
 **Serialization Rules:**
 1. SQL snake_case → JSON camelCase
