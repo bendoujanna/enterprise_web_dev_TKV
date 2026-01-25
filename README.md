@@ -210,6 +210,13 @@ ORDER BY tp.transaction_id;
   - 06_constraints.png - Database constraints
   - 07_indexes.png - Performance indexes
 
+### JSON Data Modeling 
+
+Added JSON schemas for MoMo transaction API responses in `/data/json_models/`:
+- Complete transaction examples with nested relationships
+- SQL-to-JSON mapping documentation
+- 6 JSON example files for all database entities
+
 
 #### Team members
 
