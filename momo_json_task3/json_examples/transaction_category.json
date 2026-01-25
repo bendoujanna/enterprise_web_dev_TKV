@@ -1,10 +1,9 @@
 {
   "transaction_category": {
-    "category_id": "CAT001",
-    "category_name": "Money Transfer",
+    "category_id": 1,
+    "name": "Money Transfer",
+    "code": "XFER",
     "description": "Person-to-person money transfer",
-    "transaction_fee": 500.00,
-    "min_amount": 1000.00,
-    "max_amount": 5000000.00
+    "created_at": "2024-01-24T09:00:00Z"
   }
 }
