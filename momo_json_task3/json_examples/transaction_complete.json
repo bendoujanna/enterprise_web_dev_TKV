@@ -1,96 +1,36 @@
 {
-  "complete_transaction": {
-    "metadata": {
-      "version": "1.0",
-      "generated_at": "2024-01-25T15:30:00Z",
-      "system": "MoMo-SMS-Processor"
+  "transaction": {
+    "transaction_id": "TXN20260124001",
+    "category_id": 1,
+    "amount": 10000.00,
+    "currency": "RWF",
+    "transaction_date": "2024-01-24T14:30:45Z",
+    "fee": 100.00,
+    "balance_after": 39900.00,
+    "status": "COMPLETED",
+    "reference_code": "REF001",
+    "description": "Money transfer to Marie",
+    "created_at": "2024-01-24T14:30:45Z"
+  },
+  "parties": [
+    {
+      "party_id": 1,
+      "user_id": 1,
+      "name": "Jean Damascene Nkusi",
+      "role": "SENDER",
+      "phone_number": "+250788123456"
     },
-    "transaction": {
-      "id": "TXN20240125001",
-      "reference": "REF7A83B9C1D2",
-      "amount": 150000.00,
-      "currency": "UGX",
-      "timestamp": "2024-01-25T14:30:45Z",
-      "status": "completed",
-      "type": "money_transfer",
-      "description": "School fees payment - Trinity College"
-    },
-    "parties": {
-      "sender": {
-        "id": "U1001",
-        "name": "John Doe",
-        "phone": "256712345678",
-        "account_balance_before": 300000.00,
-        "account_balance_after": 149500.00
-      },
-      "receiver": {
-        "id": "U1002", 
-        "name": "Jane Smith",
-        "phone": "256712345680",
-        "account_balance_before": 50000.00,
-        "account_balance_after": 200000.00
-      },
-      "agent": {
-        "id": "AGT001",
-        "name": "Nakasero Mobile Point",
-        "location": "Kampala, Central Division"
-      }
-    },
-    "financials": {
-      "principal": 150000.00,
-      "fee": 500.00,
-      "tax": 0.00,
-      "total": 150500.00,
-      "commission": 250.00
-    },
-    "category": {
-      "id": "CAT001",
-      "name": "Money Transfer",
-      "subcategory": "Education Payment"
-    },
-    "verification": {
-      "pin_used": true,
-      "otp_verified": true,
-      "biometric": false,
-      "session_id": "SESS_ABC123XYZ"
-    },
-    "notifications": {
-      "sms_sent": true,
-      "sms_timestamp": "2024-01-25T14:30:50Z",
-      "push_notification": true,
-      "email_sent": false
-    },
-    "audit_trail": [
-      {
-        "step": 1,
-        "action": "initiated",
-        "timestamp": "2024-01-25T14:30:00Z",
-        "status": "success"
-      },
-      {
-        "step": 2,
-        "action": "verified",
-        "timestamp": "2024-01-25T14:30:15Z",
-        "status": "success"
-      },
-      {
-        "step": 3,
-        "action": "processed",
-        "timestamp": "2024-01-25T14:30:30Z",
-        "status": "success"
-      },
-      {
-        "step": 4,
-        "action": "completed",
-        "timestamp": "2024-01-25T14:30:45Z",
-        "status": "success"
-      }
-    ],
-    "system_data": {
-      "processing_time_ms": 450,
-      "api_version": "v2.1",
-      "gateway": "MTN_UGANDA",
-      "response_code": "200"
+    {
+      "party_id": 2,
+      "user_id": 2,
+      "name": "Marie Claire Uwase",
+      "role": "RECEIVER",
+      "phone_number": "+250788234567"
     }
+  ],
+  "category": {
+    "category_id": 1,
+    "name": "Money Transfer",
+    "code": "XFER"
   }
 }
