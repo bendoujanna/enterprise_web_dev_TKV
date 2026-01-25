@@ -1,0 +1,10 @@
+{
+  "transaction": {
+    "transaction_id": "TXN20240125002",
+    "amount": 50000.00,
+    "currency": "UGX",
+    "status": "completed",
+    "timestamp": "2024-01-25T15:30:00Z",
+    "description": "Utility bill payment"
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "transaction_category": {
-    "category_id": 1,
-    "name": "Money Transfer",
-    "code": "XFER",
-    "description": "Person-to-person money transfer",
-    "created_at": "2024-01-24T09:00:00Z"
-  }
-}
