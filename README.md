@@ -247,6 +247,14 @@ Added JSON schemas for MoMo transaction API responses in `/data/json_models/`:
 
 - 6 JSON example files for all database entities
 
+#### Database design documentation
+
+[Database Design documentation.pdf](https://github.com/user-attachments/files/24858284/Database.Design.documentation.pdf)
+
+##### Team sheet
+
+[BSE Team Task Sheet_EWD_Database Design and Implementation_Cohort 3_Team16 - 1 (1).pdf](https://github.com/user-attachments/files/24858298/BSE.Team.Task.Sheet_.EWD_Database.Design.and.Implementation_Cohort.3_Team16.-.1.1.pdf)
+
 
 #### Team members
 
