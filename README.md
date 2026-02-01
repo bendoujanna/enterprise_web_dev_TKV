@@ -26,36 +26,29 @@ This project is an enterprise-level full-stack application designed to process, 
 │       ├── etl.log           # Logs for the ETL process
 │       └── dead_letter/      # Storage for unparsed/invalid XML snippets
 ├── docs/
-│   └── erd_diagram.png       # ERD image
+│   ├── erd_diagram.png       # ERD image
+│   └── api_docs.md
 ├── database/                 # Database implementation
 │   └── database_setup.sql
 ├── json/                     # json schemas
 │    └── examples
+│       ├── json_schemas.json
 │       ├── system_log.json
 │       ├── transaction_category.json
 │       ├── transaction_clean.json  
 │       ├── transaction_complete.json   
 │       └── user_example.json
-├── etl/
-│   ├── __init__.py
-│   ├── config.py             # File paths and configuration thresholds
-│   ├── parse_xml.py          # XML parsing logic
-│   ├── clean_normalize.py    # Data cleaning (dates, amounts, phones)
-│   ├── categorize.py         # Transaction type classification logic
-│   ├── load_db.py            # Database schema and upload logic
-│   └── run.py                # Main CLI to execute the full pipeline
-├── api/                      # Optional: API layer for data access
-│   ├── __init__.py
-│   ├── app.py                # FastAPI/Flask entry point
-│   └── schemas.py            # Data models
-├── scripts/
-│   ├── run_etl.sh            # Script to run the ETL pipeline
-│   ├── export_json.sh        # Script to rebuild processed JSON
-│   └── serve_frontend.sh     # Script to launch local web server
-└── tests/
-    ├── test_parse_xml.py     # Unit tests for parsing
-    ├── test_clean_normalize.py
-    └── test_categorize.py
+├── api/
+│   ├── server.py            # The main API server (handles requests)
+│   ├── transactions.json    # The persistent database (JSON format)
+│   └── test_api.sh          # Automated test script
+├── dsa/
+│   ├── modified_sms_v2.xml  # The raw XML data source
+│   ├── xml_parser.py        # Script to convert XML -> JSON
+│   ├── search_analysis.py   # DSA Performance comparison script
+│   └── performance_results.json # Results of the DSA analysis
+└── screenshots
+
 ```
 
 ## High-Level System Architecture
@@ -254,6 +247,142 @@ Added JSON schemas for MoMo transaction API responses in `/data/json_models/`:
 ##### Team sheet
 
 [BSE Team Task Sheet_EWD_Database Design and Implementation_Cohort 3_Team16 - 1 (1).pdf](https://github.com/user-attachments/files/24858298/BSE.Team.Task.Sheet_.EWD_Database.Design.and.Implementation_Cohort.3_Team16.-.1.1.pdf)
+
+## Mobile Money SMS Transaction API
+
+This project is a **RESTful API** designed to manage Mobile Money transaction records. It was built to solve the problem of parsing, storing, and efficiently searching through thousands of SMS transaction logs.
+
+The system performs three main tasks:
+1.  **Parses** raw XML SMS data into a structured JSON format.
+
+2.  **Serves** this data via a secure HTTP API (Create, Read, Update, Delete).
+
+3.  **Demonstrates** the performance difference between Linear Search (O(n)) and Dictionary Lookup (O(1)).
+
+# I. Getting started 
+
+**Prerequisites**
+
+        Python 3.x is installed on your system.
+        
+        Terminal/Command Prompt access.
+
+**Installation & Setup**
+
+1. Parse the Data First, run the parser script to convert the raw XML logs (1,691 records) into a usable JSON database.
+
+       python3 dsa/xml_parser.py
+
+2. Start the API Server: Navigate to the api folder and start the server
+
+        cd api
+        python3 server.py
+
+The server will start at: http://localhost:8000
+
+# II. Authentification
+
+The API is secured using Basic Authentication. You must provide these credentials to access any endpoint.
+
+    Username: admin
+    
+    Password: password123
+
+Requests without credentials will return 401 Unauthorized
+
+# III. API endpoints
+
+**1. List All Transactions**
+   
+Retrieves the full list of transactions.
+
+- Method: GET
+
+- URL: /transactions
+
+- Response: JSON array of all transactions.
+
+**2. Get Single Transaction**
+   
+Retrieves details for a specific ID.
+
+- Method: GET
+
+- URL: /transactions/{id}
+
+- Example: /transactions/1
+
+**3. Create Transaction**
+
+Adds a new record to the database.
+
+- Method: POST
+
+- URL: /transactions
+
+- Body (JSON):
+  
+          {
+            "type": "SEND",
+            "amount": 5000,
+            "sender": "You",
+            "receiver": "Samuel Carter 58769",
+            "status": "completed"
+          }
+
+**4. Update Transaction**
+
+Modifies an existing record.
+
+- Method: PUT
+
+- URL: /transactions/{id}
+
+- Body (JSON):
+
+      {
+        "amount": 6000,
+        "status": "completed"
+      }
+
+**5. Delete Transaction**
+
+Permanently removes a record.
+
+- Method: DELETE
+
+- URL: /transactions/{id}
+
+## IV. DSA Component: Performance Analysis
+
+A key requirement of this project was to prove that Hash Maps (Dictionaries) are faster than Linear Lists for data retrieval.
+
+We compared two search algorithms:
+
+1. Linear Search (O(n)): Loops through the list one by one. Slower as data grows.
+
+2. Dictionary Lookup (O(1)): Uses a hash key to jump directly to the data. Instant access.
+
+**How to run the analysis**
+
+    python3 dsa/search_analysis.py
+
+**Results**
+
+1. LINEAR SEARCH (O(n) - checks each item) 
+
+       Average time: 0.000051707 seconds
+       Total time:   0.001034138 seconds
+       Fastest:      0.000039141 seconds
+       Slowest:      0.000117806 seconds
+
+2. DICTIONARY LOOKUP (O(1) - direct access)
+   
+       Dict creation: 0.000160624 seconds
+       Average time:  0.000000230 seconds
+       Total time:    0.000004606 seconds
+       Fastest:       0.000000074 seconds
+       Slowest:       0.000001958 seconds
 
 
 #### Team members
