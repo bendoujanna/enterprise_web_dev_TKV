@@ -59,7 +59,7 @@ def compare_performance(transactions, test_ids):
         end = time.perf_counter()
         dict_times.append(end - start)
     
- avg_dict = sum(dict_times) / len(dict_times)
+    avg_dict = sum(dict_times) / len(dict_times)
     print(f"Dict lookup avg time: {avg_dict}")
     
     # calculate how much faster
