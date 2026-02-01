@@ -59,3 +59,30 @@ def compare_performance(transactions, test_ids):
         end = time.perf_counter()
         dict_times.append(end - start)
     
+ avg_dict = sum(dict_times) / len(dict_times)
+    print(f"Dict lookup avg time: {avg_dict}")
+    
+    # calculate how much faster
+    speedup = avg_linear / avg_dict
+    
+    results = {
+        'linear_search': {
+            'avg_time': avg_linear,
+            'total_time': sum(linear_times),
+            'min_time': min(linear_times),
+            'max_time': max(linear_times)
+        },
+        'dictionary_lookup': {
+            'avg_time': avg_dict,
+            'total_time': sum(dict_times),
+            'min_time': min(dict_times),
+            'max_time': max(dict_times),
+            'dict_creation_time': dict_creation
+        },
+        'speedup': speedup,
+        'test_count': len(test_ids)
+    }
+    
+    return results
+
+
