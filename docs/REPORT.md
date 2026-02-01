@@ -1,12 +1,4 @@
 # Mobile Money SMS Transaction REST API
-## Technical Report
-
-**Student Name:** [Your Name]  
-**Student ID:** [Your ID]  
-**Course:** Enterprise Web Development  
-**Institution:** African Leadership University  
-**Date:** January 25, 2026
-
 ---
 
 ## Executive Summary
@@ -875,3 +867,4 @@ The methodical approach taken—from XML parsing through testing and documentati
 5. RFC 7617. (2015). *The 'Basic' HTTP Authentication Scheme*. IETF
 
 ---
+
