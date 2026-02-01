@@ -18,10 +18,16 @@ def extract_transaction_info(body_text, date_str):
         'status': 'completed'
     }
     
-    # try to extract transaction ID
+    # try to extract transaction ID (TxId format)
     txid_match = re.search(r'TxId[:\s]+(\d+)', body_text)
     if txid_match:
         trans['id'] = txid_match.group(1)
+    
+    # if not found, try Financial Transaction Id
+    if not trans['id']:
+        financial_id_match = re.search(r'Financial Transaction Id[:\s]+(\d+)', body_text)
+        if financial_id_match:
+            trans['id'] = financial_id_match.group(1)
     
     # extract amount (look for patterns like "5000 RWF" or "5,000 RWF")
     amount_match = re.search(r'(\d{1,3}(?:,\d{3})*|\d+)\s*RWF', body_text)
@@ -146,8 +152,8 @@ def save_to_json(trans_list, output_file):
 
 if __name__ == "__main__":
     # main execution starts here
-    xml_file = "../dsa/modified_sms_v2.xml"
-    output_file = "../api/transactions.json"
+    xml_file = "dsa/modified_sms_v2.xml"
+    output_file = "api/transactions.json"
     
     print("Starting XML parsing...")
     transactions = parse_xml_to_json(xml_file)

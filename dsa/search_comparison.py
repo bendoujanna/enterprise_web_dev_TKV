@@ -3,7 +3,8 @@
 
 import time
 import json
-
+import os 
+import random
 
 def linear_search(transactions, transaction_id):
     # this is the slow way - just loop through everything
@@ -63,7 +64,10 @@ def compare_performance(transactions, test_ids):
     print(f"Dict lookup avg time: {avg_dict}")
     
     # calculate how much faster
-    speedup = avg_linear / avg_dict
+    if avg_dict > 0:
+        speedup = avg_linear / avg_dict
+    else:
+        speedup = 0
     
     results = {
         'linear_search': {
@@ -89,22 +93,28 @@ def compare_performance(transactions, test_ids):
 def run_comparison():
     # main function to run everything
     print("Loading transactions from JSON file...")
-    try:
-        with open('../data/transactions.json', 'r') as f:
-            transactions = json.load(f)
-    except FileNotFoundError:
+    if os.path.exists('api/transactions.json'):
+        path = 'api/transactions.json'
+    elif os.path.exists('../api/transactions.json'):
+        path = '../api/transactions.json'
+    else:
         print("ERROR: transactions.json not found!")
         print("You need to run xml_parser.py first")
+        print("Or please run from the project root: python3 dsa/search_analysis.py")
         return
+
+    with open(path, 'r') as f:
+        transactions = json.load(f)
     
     print(f"Loaded {len(transactions)} transactions")
-    print("")
+    
+    if len(transactions) < 20:
+        print("Warning: Need at least 20 transactions for a good test.")
+   
     
     # create test IDs (need at least 20 for the assignment)
-    test_ids = []
-    for i in range(1, 21):  # testing IDs 1-20
-        test_ids.append(str(i))
-    
+    test_ids = [t['id'] for t in transactions[-20:]]
+
     print("="*60)
     print("PERFORMANCE COMPARISON: LINEAR SEARCH vs DICTIONARY LOOKUP")
     print("="*60)
@@ -162,9 +172,14 @@ Other efficient data structures:
     
     # save results to file
     print("Saving results to file...")
-    with open('../dsa/performance_results.json', 'w') as f:
+    if os.path.exists('dsa'):
+        output_file = 'dsa/performance_results.json'
+    else:
+        output_file = 'performance_results.json'
+        
+    with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
-    print("Results saved to dsa/performance_results.json")
+    print(f"Results saved to {output_file}")
 
 
 if __name__ == "__main__":

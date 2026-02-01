@@ -6,6 +6,7 @@ import json
 import base64
 from urllib.parse import urlparse
 import os
+from datetime import datetime
 
 # global storage for transactions
 all_transactions = []
@@ -163,7 +164,6 @@ class TransactionAPI(BaseHTTPRequestHandler):
                 
                 # add timestamp if not provided
                 if 'timestamp' not in new_trans:
-                    from datetime import datetime
                     new_trans['timestamp'] = datetime.now().isoformat()
                 
                 # add status if not provided
@@ -175,7 +175,7 @@ class TransactionAPI(BaseHTTPRequestHandler):
                 trans_dict[new_id] = new_trans
                 
                 print(f"Created new transaction with ID: {new_id}")
-                
+                save_data()
                 response = {
                     'success': True,
                     'message': 'Transaction created',
@@ -221,6 +221,8 @@ class TransactionAPI(BaseHTTPRequestHandler):
                         transaction[key] = update_data[key]
                 
                 print(f"Updated transaction {trans_id}")
+
+                save_data()
                 
                 response = {
                     'success': True,
@@ -263,6 +265,8 @@ class TransactionAPI(BaseHTTPRequestHandler):
             del trans_dict[trans_id]
             
             print(f"Deleted transaction {trans_id}")
+
+            save_data()
             
             response = {
                 'success': True,
@@ -280,7 +284,7 @@ def load_data():
     global all_transactions, trans_dict
     
     try:
-        with open('../data/transactions.json', 'r') as f:
+        with open('transactions.json', 'r') as f:
             all_transactions = json.load(f)
             
         # create dictionary for fast lookups
@@ -295,6 +299,13 @@ def load_data():
         all_transactions = []
         trans_dict = {}
 
+
+def save_data():
+    try:
+        with open('transactions.json', 'w') as f:
+            json.dump(all_transactions, f, indent=2)
+    except Exception as e:
+        print(f"Error saving data: {e}")
 
 def start_server(port=8000):
     # start the API server

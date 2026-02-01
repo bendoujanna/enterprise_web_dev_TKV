@@ -31,8 +31,8 @@ curl -X POST "$API_URL/transactions" \
   -d '{
     "type": "SEND",
     "amount": 15000,
-    "sender": "+250788111222",
-    "receiver": "+250788333444",
+    "sender": "You",
+    "receiver": "Samuel Carter 58069",
     "status": "completed"
   }' \
   -w "\nStatus: %{http_code}\n\n"
