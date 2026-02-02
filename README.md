@@ -48,6 +48,8 @@ This project is an enterprise-level full-stack application designed to process, 
 │   ├── search_analysis.py   # DSA Performance comparison script
 │   └── performance_results.json # Results of the DSA analysis
 └── screenshots
+     ├── api_screenshots  # postman images 
+     └── database_screenshots # CRUD 
 
 ```
 
@@ -280,6 +282,10 @@ The system performs three main tasks:
 
 The server will start at: http://localhost:8000
 
+ 3. Run Performance Analysis (Run from Root)
+
+           python3 dsa/search_analysis.py 
+
 # II. Authentification
 
 The API is secured using Basic Authentication. You must provide these credentials to access any endpoint.
@@ -384,6 +390,21 @@ We compared two search algorithms:
        Fastest:       0.000000074 seconds
        Slowest:       0.000001958 seconds
 
+
+# V. Automated Testing
+
+You can run the automated test script to check all endpoints instantly.
+
+- Location: Run inside the api/ folder (or from root using ./api/test_api.sh).
+
+        cd api
+        ./test_api.sh
+
+**NOTE: This file is completely optional and  not a requirement for this assignment.** 
+
+**Manual Testing**
+
+You can also use Postman or cURL to test the endpoints manually using the credentials provided above.
 
 #### Team members
 
