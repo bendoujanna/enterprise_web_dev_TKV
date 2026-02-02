@@ -65,23 +65,23 @@ curl -X GET http://localhost:8000/transactions \
   "count": 20,
   "data": [
     {
-      "id": "1",
-      "type": "SEND",
-      "amount": 5000.0,
-      "sender": "+250788123456",
-      "receiver": "+250788654321",
-      "timestamp": "2024-01-15T10:30:00",
-      "status": "completed"
-    },
-    {
-      "id": "2",
-      "type": "RECEIVE",
-      "amount": 10000.0,
-      "sender": "+250788654321",
-      "receiver": "+250788123456",
-      "timestamp": "2024-01-15T11:45:00",
-      "status": "completed"
-    }
+    "id": "6",
+    "type": "SEND",
+    "amount": 10000.0,
+    "sender": "You",
+    "receiver": "Samuel Carter (250791666666)",
+    "timestamp": "2024-05-11T20:34:55.316000",
+    "status": "completed"
+  },
+  {
+    "id": "7",
+    "type": "SEND",
+    "amount": 1000.0,
+    "sender": "You",
+    "receiver": "Samuel Carter (250790777777)",
+    "timestamp": "2024-05-12T03:47:40.264000",
+    "status": "completed"
+  },
   ]
 }
 ```
@@ -121,7 +121,7 @@ curl -X GET http://localhost:8000/transactions/1 \
     "id": "1",
     "type": "SEND",
     "amount": 5000.0,
-    "sender": "+250788123456",
+    "sender": "You",
     "receiver": "+250788654321",
     "timestamp": "2024-01-15T10:30:00",
     "status": "completed"
@@ -166,8 +166,8 @@ curl -X POST http://localhost:8000/transactions \
   -d '{
     "type": "SEND",
     "amount": 15000,
-    "sender": "+250788111222",
-    "receiver": "+250788333444",
+    "sender": "You",
+    "receiver": "Robert Brown 23478",
     "status": "completed"
   }'
 ```
@@ -182,8 +182,8 @@ curl -X POST http://localhost:8000/transactions \
     "id": "21",
     "type": "SEND",
     "amount": 15000,
-    "sender": "+250788111222",
-    "receiver": "+250788333444",
+    "sender": "You",
+    "receiver": "Robert Brown 23478",
     "timestamp": "2024-01-25T12:30:45.123456",
     "status": "completed"
   }
@@ -234,8 +234,8 @@ curl -X PUT http://localhost:8000/transactions/1 \
     "id": "1",
     "type": "SEND",
     "amount": 6000,
-    "sender": "+250788123456",
-    "receiver": "+250788654321",
+    "sender": "You",
+    "receiver": "Robert Brown 23478",
     "timestamp": "2024-01-15T10:30:00",
     "status": "verified"
   }
@@ -280,8 +280,8 @@ curl -X DELETE http://localhost:8000/transactions/20 \
     "id": "20",
     "type": "RECEIVE",
     "amount": 8500.0,
-    "sender": "+250788999000",
-    "receiver": "+250788123456",
+    "sender": "You",
+    "receiver": "Robert Brown 23478",
     "timestamp": "2024-01-23T16:00:00",
     "status": "completed"
   }
@@ -351,8 +351,8 @@ curl -X DELETE http://localhost:8000/transactions/20 \
 {
   "type": "SEND",
   "amount": 15000,
-  "sender": "+250788111222",
-  "receiver": "+250788333444"
+  "sender": "You",
+  "receiver": "Samuel Carter 45355"
 }
 ```
 
@@ -446,10 +446,10 @@ See `dsa/search_comparison.py` for detailed analysis comparing:
 - **Linear Search:** O(n) - iterates through all transactions
 - **Dictionary Lookup:** O(1) - direct hash table access
 
-**Results:** Dictionary lookup is ~1.37x faster for 20 records, but scales dramatically better with larger datasets.
+**Results:** Dictionary lookup is ~215.06x faster for 20 records, but scales dramatically better with larger datasets.
 
 ---
 
-## Contact
+## Licence
 
-For issues or questions about this API, please refer to the course assignment or contact your instructor.
+This project is developed for educational purposes as part of the Enterprise Web Development Formative.
