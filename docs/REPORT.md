@@ -76,7 +76,7 @@ The system consists of four main components:
 1. **XML Parser:** Converts raw XML SMS data to JSON format
 2. **REST API Server:** Handles HTTP requests and responses
 3. **Authentication Module:** Validates user credentials
-4. **Data Store:** In-memory storage with dictionary-based indexing
+4. **Data Store:** In-memory dictionary with JSON file persistence
 
 ### 2.2 Technology Stack
 
@@ -107,12 +107,21 @@ Return JSON Response
 ### 2.4 File Structure
 
 ```
-rest-api/
-├── api/              # API server and parser
-├── dsa/              # Algorithm comparisons
-├── data/             # XML and JSON data
-├── docs/             # Documentation
-└── screenshots/      # Test evidence
+enterprise_web_dev_TKV/
+├── api/
+│   ├── server.py            # The main API server (handles requests)
+│   ├── transactions.json    # The persistent database (JSON format)
+│   └── test_api.sh          # Automated test script
+├── dsa/
+│   ├── modified_sms_v2.xml  # The raw XML data source
+│   ├── xml_parser.py        # Script to convert XML -> JSON
+│   ├── search_analysis.py   # DSA Performance comparison script
+│   └── performance_results.json # Results of the DSA analysis
+├── docs/
+│   ├── REPORT.md
+│   └── api_docs.md          # Additional documentation
+├── screenshots/             # Evidence of testing (Postman images)
+└── README.md                
 ```
 
 ---
@@ -290,6 +299,7 @@ transaction = transaction_dict.get(transaction_id)
 **Time Complexity:** O(1) average case
 **Space Complexity:** O(n) for dictionary storage
 
+Dictionary is built once during server startup to ensure O(1) access during runtime.
 ---
 
 ### 4.3 Performance Testing
@@ -645,8 +655,8 @@ curl -X POST http://localhost:8000/transactions \
   -d '{
     "type": "SEND",
     "amount": 15000,
-    "sender": "+250788111222",
-    "receiver": "+250788333444"
+    "sender": "You",
+    "receiver": "Samuel Carter 34242"
   }'
 ```
 
