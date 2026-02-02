@@ -313,8 +313,8 @@ Dictionary is built once during server startup to ensure O(1) access during runt
 
 | Metric | Linear Search | Dictionary Lookup | Improvement |
 |--------|--------------|-------------------|-------------|
-| Average Time | 0.000000487s | 0.000000355s | 1.37x faster |
-| Total Time | 0.000009745s | 0.000007106s | - |
+| Average Time | 0.000052s | 0.00000023s | 224.4x faster |
+| Total Time | 0.001034s | 0.000005s | - |
 | Min Time | 0.000000286s | 0.000000101s | - |
 | Max Time | 0.000001057s | 0.000003631s | - |
 
